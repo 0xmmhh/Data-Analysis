@@ -1,47 +1,48 @@
 import csv
 from datetime import datetime
 
-with open('przykladowe_dane.csv', mode='r', encoding='utf-8') as pesel_plik:
-        reader = csv.reader(pesel_plik)
+with open('przykladowe_dane.csv', mode='r', encoding='utf-8') as pesel_file:
+        reader = csv.reader(pesel_file)
         next(reader)
-        pesele = []
+        pesel = []
         for row in reader:
-            pesele.append(row[2])
+            pesel.append(row[2])
 
-def pesel_decrypt(pesele):
-    rok = int(pesele[:2])
-    miesiac = int(pesele[2:4])
-    dzien = int(pesele[4:6])
-    gender = pesele[9]
+def pesel_decrypt(pesel):
+    year = int(pesel[:2])
+    month = int(pesel[2:4])
+    day = int(pesel[4:6])
+    gender = pesel[9]
 
     if int(gender) % 2 == 0:
         sex = "Kobieta"
     else:
         sex = "Mężczyzna"
 
-    if 81 <= int(miesiac) <= 92:
-        miesiac = miesiac - 80
-        rok = rok + 1800
-    elif 21 <= int(miesiac) <= 32:
-        miesiac = miesiac - 20
-        rok = rok + 2000
-    elif 41 <= int(miesiac) <= 52:
-        miesiac = miesiac - 40
-        rok = rok + 2100
-    elif 61 <= int(miesiac) <= 72:
-        miesiac = miesiac - 60
-        rok = rok + 2200
-    elif 1 <= int(miesiac) <= 12:
-        rok = rok + 1900
+    if 81 <= int(month) <= 92:
+        month = month - 80
+        year = year + 1800
+    elif 21 <= int(month) <= 32:
+        month = month - 20
+        year = year + 2000
+    elif 41 <= int(month) <= 52:
+        month = month - 40
+        year = year + 2100
+    elif 61 <= int(month) <= 72:
+        month = month - 60
+        year = year + 2200
+    elif 1 <= int(month) <= 12:
+        year = year + 1900
 
-    data_urodzenia = datetime(rok, miesiac, dzien).date()
+    return [day, month, year, sex]
+    # birth_date = datetime(year, month, day).date() # do wyjebania
 
-    wynik = f"{data_urodzenia}, {sex}"
+    # wynik = f"{birth_date}, {sex}"
 
-    return wynik
+    # return wynik
 
-def znak_zodiaku(data_urodzenia):
-    znaki_zodiaku = [
+def zodiac_signs(birth_date):
+    zodiac_signs = [
         ('Koziorożec', (12, 22), (1, 19)),
         ('Wodnik', (1, 20), (2, 18)),
         ('Ryby', (2, 19), (3, 20)),
@@ -57,14 +58,15 @@ def znak_zodiaku(data_urodzenia):
         ('Koziorożec', (12, 22), (12, 31)),
     ]
 
-    miesiac = data_urodzenia.month
-    dzien = data_urodzenia.day
+    month = birth_date.month
+    day = birth_date.day
 
-    for znak, (start_m, start_d), (end_m, end_d) in znaki_zodiaku:
-        if (start_m == miesiac and dzien >= start_d) or (end_m == miesiac and dzien <= end_d):
+    for znak, (start_m, start_d), (end_m, end_d) in zodiac_signs:
+        if (start_m == month and day >= start_d) or (end_m == month and day <= end_d):
             return znak
-#linijke nizej zamiast recznego wpisywania daty trzeba zrobic tak, zeby bralo z listy "pesele" bo nie wiem jak
-data_urodzenia = datetime(2000, 7, 14).date()
-znak = znak_zodiaku(data_urodzenia)
-print(znak)
-print(data_urodzenia)
+#linijke nizej zamiast recznego wpisywania daty trzeba zrobic tak, zeby bralo z listy "pesel" bo nie wiem jak
+# birth_date = datetime(2000, 7, 14).date()
+# znak = zodiac_signs(birth_date)
+# print(znak)
+# print(birth_date)
+print(pesel_decrypt(pesel[0]))
