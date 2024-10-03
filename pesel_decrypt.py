@@ -1,5 +1,5 @@
 import csv
-from datetime import datetime
+
 
 with open('przykladowe_dane.csv', mode='r', encoding='utf-8') as pesel_file:
         reader = csv.reader(pesel_file)
@@ -43,7 +43,7 @@ def pesel_decrypt(pesel):
 
     # return wynik
 
-def zodiac_signs(birth_date):
+def zodiac_signs(day, month):
     zodiac_signs = [
         ('Koziorożec', (12, 22), (1, 19)),
         ('Wodnik', (1, 20), (2, 18)),
@@ -60,28 +60,19 @@ def zodiac_signs(birth_date):
         ('Koziorożec', (12, 22), (12, 31)),
     ]
 
-    month = pesel_decrypt(pesel[sign])[1]
-    day = pesel_decrypt(pesel[sign])[0]
 
-    sign_arr = []
-    x = 0
-    while x < 3:
-        x += 1
-        for sign, (start_m, start_d), (end_m, end_d) in zodiac_signs:
-            
-
-            if (start_m == month and day >= start_d) or (end_m == month and day <= end_d):
-                sign_arr.append(sign)
-
-            
+    for sign, (start_m, start_d), (end_m, end_d) in zodiac_signs:
+        if (start_m == month and day >= start_d) or (end_m == month and day <= end_d):
+            return sign
+           
 
 
 
 #linijke nizej zamiast recznego wpisywania daty trzeba zrobic tak, zeby bralo z listy "pesel" bo nie wiem jak
-birth_date = f'{pesel_decrypt(pesel[0])[2]}-{pesel_decrypt(pesel[0])[1]}-{pesel_decrypt(pesel[0])[0]}'
-sign = zodiac_signs(birth_date)
-print(sign)
-print(birth_date)
-# print(pesel_decrypt(pesel[0]))
+for i in range(min(200, len(pesel))):
+    pesel_data = pesel_decrypt(pesel[i])
+    birth_date = f'{pesel_data[2]}-{pesel_data[1]:02}-{pesel_data[0]:02}' 
+    zodiac = zodiac_signs(pesel_data[0], pesel_data[1]) 
 
-print(pesel_decrypt(pesel[0])[0])
+    print(f"PESEL: {pesel[i]}, Data urodzenia: {birth_date}, Płeć: {pesel_data[3]}, Znak zodiaku: {zodiac}")
+# print(pesel_decrypt(pesel[0]))
