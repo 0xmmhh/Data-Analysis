@@ -34,7 +34,9 @@ def pesel_decrypt(pesel):
     elif 1 <= int(month) <= 12:
         year = year + 1900
 
-    return [day, month, year, sex]
+    pesel_data = [day, month, year, sex]
+
+    return pesel_data
     # birth_date = datetime(year, month, day).date() # do wyjebania
 
     # wynik = f"{birth_date}, {sex}"
@@ -58,15 +60,28 @@ def zodiac_signs(birth_date):
         ('Koziorożec', (12, 22), (12, 31)),
     ]
 
-    month = birth_date.month
-    day = birth_date.day
+    month = pesel_decrypt(pesel[sign])[1]
+    day = pesel_decrypt(pesel[sign])[0]
 
-    for znak, (start_m, start_d), (end_m, end_d) in zodiac_signs:
-        if (start_m == month and day >= start_d) or (end_m == month and day <= end_d):
-            return znak
+    sign_arr = []
+    x = 0
+    while x < 3:
+        x += 1
+        for sign, (start_m, start_d), (end_m, end_d) in zodiac_signs:
+            
+
+            if (start_m == month and day >= start_d) or (end_m == month and day <= end_d):
+                sign_arr.append(sign)
+
+            
+
+
+
 #linijke nizej zamiast recznego wpisywania daty trzeba zrobic tak, zeby bralo z listy "pesel" bo nie wiem jak
-# birth_date = datetime(2000, 7, 14).date()
-# znak = zodiac_signs(birth_date)
-# print(znak)
-# print(birth_date)
-print(pesel_decrypt(pesel[0]))
+birth_date = f'{pesel_decrypt(pesel[0])[2]}-{pesel_decrypt(pesel[0])[1]}-{pesel_decrypt(pesel[0])[0]}'
+sign = zodiac_signs(birth_date)
+print(sign)
+print(birth_date)
+# print(pesel_decrypt(pesel[0]))
+
+print(pesel_decrypt(pesel[0])[0])
