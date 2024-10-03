@@ -69,7 +69,7 @@ def zodiac_signs(day, month):
 
 
 #linijke nizej zamiast recznego wpisywania daty trzeba zrobic tak, zeby bralo z listy "pesel" bo nie wiem jak
-for i in range(min(200, len(pesel))):
+for i in range(200):
     pesel_data = pesel_decrypt(pesel[i])
     birth_date = f'{pesel_data[2]}-{pesel_data[1]:02}-{pesel_data[0]:02}' 
     zodiac = zodiac_signs(pesel_data[0], pesel_data[1]) 
