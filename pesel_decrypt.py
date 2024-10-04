@@ -1,13 +1,17 @@
 import csv
-
+import matplotlib as plt
+import matplotlib.pyplot as plt
 
 with open('przykladowe_dane.csv', mode='r', encoding='utf-8') as pesel_file:
         reader = csv.reader(pesel_file)
         next(reader)
         pesel = []
+        names = []
+        last_names = []
         for row in reader:
             pesel.append(row[2])
-
+            names.append(row[0])
+            last_names.append(row[1])
 def pesel_decrypt(pesel):
     year = int(pesel[:2])
     month = int(pesel[2:4])
@@ -59,14 +63,66 @@ def zodiac_signs(day, month):
     for sign, (st_m, st_d), (end_m, end_d) in zodiac_signs:
         if (st_m == month and day >= st_d) or (end_m == month and day <= end_d):
             return sign
-           
+Koz = 0
+Wod = 0
+Ryb = 0
+Bar = 0
+Byk = 0
+Bli = 0
+Rak = 0
+Lew = 0
+Pan = 0
+Wag = 0
+Sko = 0
+Stz = 0
 
-
-
-for i in range(200):
+for i in range(2302):
     pesel_data = pesel_decrypt(pesel[i])
-    birth_date = f'{pesel_data[2]}-{pesel_data[1]}-{pesel_data[0]}' 
-    zodiac = zodiac_signs(pesel_data[0], pesel_data[1]) 
+    birth_date = [pesel_data[2]-pesel_data[1]-pesel_data[0]]
+    zodiac = zodiac_signs(pesel_data[0], pesel_data[1])
+    if zodiac == 'Koziorożec':
+        Koz += 1
+    elif zodiac == 'Wodnik':
+        Wod += 1
+    elif zodiac == 'Ryby':
+        Ryb += 1
+    elif zodiac == 'Baran':
+        Bar += 1
+    elif zodiac == 'Byk':
+        Byk += 1
+    elif zodiac == 'Bliźnięta':
+        Bli += 1
+    elif zodiac == 'Rak':
+        Rak += 1
+    elif zodiac == 'Lew':
+        Lew += 1
+    elif zodiac == 'Panna':
+        Pan += 1
+    elif zodiac == 'Waga':
+        Wag += 1
+    elif zodiac == 'Skorpion':
+        Sko += 1
+    elif zodiac == 'Strzelec':
+        Stz += 1
+        
+# for i in range(200):
+#     pesel_data = pesel_decrypt(pesel[i])
+#     birth_date = f'{pesel_data[2]}-{pesel_data[1]}-{pesel_data[0]}' 
+#     zodiac = zodiac_signs(pesel_data[0], pesel_data[1]) 
 
     # print(f"PESEL: {pesel[i]}, Data urodzenia: {birth_date}, Płeć: {pesel_data[3]}, Znak zodiaku: {zodiac}")
 # print(pesel_decrypt(pesel[0]))
+zodiac_names = ['Koziorożec', 'Wodnik', 'Ryby', 'Baran', 'Byk', 'Bliźnięta', 'Rak', 'Lew', 'Panna', 'Waga', 'Skorpion', 'Strzelec']
+zodiac_count = [Koz, Wod, Ryb, Bar, Byk, Bli, Rak, Lew, Pan, Wag, Sko, Stz]
+
+def zodiac_analysis1():
+    fig, ax = plt.subplots()
+    ax.bar(zodiac_names, zodiac_count, color='tab:blue')
+        
+    ax.set_label('Liczba osób')
+    ax.set_title('Liczba osób według znaków zodiaku')
+
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+        
+    plt.show()
