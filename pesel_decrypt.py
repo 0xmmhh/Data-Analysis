@@ -126,3 +126,5 @@ def zodiac_analysis1():
     plt.tight_layout()
         
     plt.show()
+
+zodiac_analysis1()
