@@ -133,5 +133,22 @@ def zodiac_analysis1():
 
     plt.show()
 
+def zodiac_analysis2():
 
-zodiac_analysis1()
+    year_to_analyze = 2004 # tutaj wpisujemy rok jako Int
+    zodiac_count_year = []
+
+
+    labels = list(zodiac_count_year)
+    sizes = list(zodiac_count_year)
+    colors = plt.cm.Paired.colors
+
+    fig, ax = plt.subplots()
+    ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
+    ax.axis('equal')
+
+    ax.set_title(f'Rozkład znaków zodiaku w roku {year_to_analyze}')
+
+    plt.show()
+
+zodiac_analysis2()
