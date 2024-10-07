@@ -112,8 +112,8 @@ for i in range(2302):
 
 # for i in range(200):
 #     pesel_data = pesel_decrypt(pesel[i])
-#     birth_date = f'{pesel_data[2]}-{pesel_data[1]}-{pesel_data[0]}' 
-#     zodiac = zodiac_signs(pesel_data[0], pesel_data[1]) 
+#     birth_date = f'{pesel_data[2]}-{pesel_data[1]}-{pesel_data[0]}'
+#     zodiac = zodiac_signs(pesel_data[0], pesel_data[1])
 
 # print(f"PESEL: {pesel[i]}, Data urodzenia: {birth_date}, Płeć: {pesel_data[3]}, Znak zodiaku: {zodiac}")
 # print(pesel_decrypt(pesel[0]))
@@ -162,25 +162,28 @@ def name_analysis1(start_decade, end_decade):
     else:
         print(f"Brak danych dla lat {start_decade}-{end_decade}")
 
-def zodiac_analysis2():
+# def zodiac_analysis2():
+#
+#     year_to_analyze = 2004 # tutaj wpisujemy rok jako Int
+#
+#     for sign, (count) in zodiac_count_year:
+#         if :
+#             return sign
+#
+#
+#     labels = list(zodiac_count_year)
+#     sizes = list(zodiac_count_year)
+#     colors = plt.cm.Paired.colors
+#
+#     fig, ax = plt.subplots()
+#     ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
+#     ax.axis('equal')
+#
+#     ax.set_title(f'Rozkład znaków zodiaku w roku {year_to_analyze}')
+#
+#     plt.show()
 
-    year_to_analyze = 2004 # tutaj wpisujemy rok jako Int
-    zodiac_count_year = []
 
-
-    labels = list(zodiac_count_year)
-    sizes = list(zodiac_count_year)
-    colors = plt.cm.Paired.colors
-
-    fig, ax = plt.subplots()
-    ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
-    ax.axis('equal')
-
-    ax.set_title(f'Rozkład znaków zodiaku w roku {year_to_analyze}')
-
-    plt.show()
-
-
-zodiac_analysis2()
-#zodiac_analysis1()
+# zodiac_analysis2()
+zodiac_analysis1()
 name_analysis1(1999, 2000)
