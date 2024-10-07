@@ -1,6 +1,7 @@
 import csv
 import matplotlib as plt
 import matplotlib.pyplot as plt
+from collections import Counter
 
 with open('przykladowe_dane.csv', mode='r', encoding='utf-8') as pesel_file:
     reader = csv.reader(pesel_file)
@@ -133,6 +134,34 @@ def zodiac_analysis1():
 
     plt.show()
 
+def name_analysis1(start_decade, end_decade):
+    names_in_decade = []
+
+    for i, pesel_number in enumerate(pesel):
+        pesel_data = pesel_decrypt(pesel_number)
+        year = pesel_data[2]
+
+        if start_decade <= year <= end_decade:
+            names_in_decade.append(names[i])
+
+    name_counter = Counter(names_in_decade)
+    most_common_name = name_counter.most_common(10)
+
+    if most_common_name:
+        name_labels, name_counts = zip(*most_common_name)
+
+        fig, ax = plt.subplots()
+        ax.bar(name_labels, name_counts, color="tab:blue")
+
+        ax.set_ylabel("Liczba wystąpień")
+        ax.set_title(f"Top 10 najczęściej występujących imion w latach {start_decade}-{end_decade}")
+
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+        plt.show()
+    else:
+        print(f"Brak danych dla lat {start_decade}-{end_decade}")
+
 def zodiac_analysis2():
 
     year_to_analyze = 2004 # tutaj wpisujemy rok jako Int
@@ -151,4 +180,7 @@ def zodiac_analysis2():
 
     plt.show()
 
+
 zodiac_analysis2()
+#zodiac_analysis1()
+name_analysis1(1999, 2000)
