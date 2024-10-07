@@ -3,24 +3,22 @@ import random
 from datetime import datetime, timedelta
 
 
+# pesel = 11 cyfr = yy mm dd PPP Płeć K, płeć : kobieta = płeć % 2 == 0, mężczyzna =! płeć % 2 == 0
 def generuj_pesel(data_urodzenia, plec):
-    # PESEL składa się z 11 cyfr, gdzie 6 pierwszych to data urodzenia (RRMMDD)
     rok, miesiac, dzien = data_urodzenia.strftime("%y"), data_urodzenia.strftime("%m"), data_urodzenia.strftime("%d")
 
-    # Modyfikacja miesiąca w zależności od wieku (dla XX wieku jest to oryginalna wartość, dla XXI + 20)
+    # tutaj zmienić jeżeli dziwne daty się pojawią, dodać warunki również dla 19, 20, 22, 23 wieku
     if data_urodzenia.year >= 2000:
         miesiac = str(int(miesiac) + 20)
 
-    # 4 cyfry losowe (z czego ostatnia zależy od płci: parzysta dla kobiet, nieparzysta dla mężczyzn)
-    random_part = f"{random.randint(0, 999):03}"  # 3 losowe cyfry
+    random_part = f"{random.randint(0, 999):03}"
     if plec == "M":
-        numer_seryjny = random.choice([1, 3, 5, 7, 9])  # nieparzysta dla mężczyzn
+        numer_seryjny = random.choice([1, 3, 5, 7, 9])
     else:
-        numer_seryjny = random.choice([0, 2, 4, 6, 8])  # parzysta dla kobiet
+        numer_seryjny = random.choice([0, 2, 4, 6, 8])
 
     pesel = f"{rok}{miesiac}{dzien}{random_part}{numer_seryjny}"
 
-    # Oblicz cyfrę kontrolną
     wagi = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3]
     suma_kontrolna = sum(int(pesel[i]) * wagi[i] for i in range(10))
     cyfra_kontrolna = (10 - suma_kontrolna % 10) % 10
@@ -29,14 +27,35 @@ def generuj_pesel(data_urodzenia, plec):
     return pesel
 
 
+# tutaj można dorobić prawdopodobieństwo oparte na populacji danego imienia (np. Piotrów jest 1.2m na 40m ludzi: 1.2/40 = 0.03 \\
+# czyli szansa na wystąpienie piotra to 3%)
 def generuj_dane(n):
-    imiona_meskie = ["Jan", "Adam", "Piotr", "Krzysztof", "Marek", "Tomasz", "Andrzej", "Michał", "Bartosz", "Łukasz", "Robert", "Kamil", "Karol", "Mateusz", "Paweł", "Damian"]
-    imiona_zenskie = ["Anna", "Katarzyna", "Maria", "Ewa", "Magdalena", "Agnieszka", "Joanna", "Małgorzata", "Natalia", "Aleksandra", "Karolina", "Patrycja", "Weronika"]
-    nazwiska = ["Kowalski", "Nowak", "Wiśniewski", "Wójcik", "Kaczmarek", "Lewandowski", "Wojciechowski", "Dąbrowski", "Kozłowski", "Jankowski", "Mazur", "Kwiatkowski", "Krawczyk"]
+    imiona_meskie = []
+    with open('same_imiona_M.csv', mode='r', encoding='utf-8') as imiona_plik:
+        reader = csv.reader(imiona_plik)
+        for row in reader:
+            imiona_meskie.append(row[0])
 
-    with open('../../PycharmProjects/HelloWorld/przykladowe_dane.csv', mode='w', newline='') as plik:
+    imiona_zenskie = []
+    with open('same_imiona_K.csv', mode='r', encoding='utf-8') as imiona_plik:
+        reader = csv.reader(imiona_plik)
+        for row in reader:
+            imiona_zenskie.append(row[0])
+
+    nazwiska = []
+    with open('same_nazwiska_K.csv', mode='r', encoding='utf-8') as nazwiska_plik:
+        reader = csv.reader(nazwiska_plik)
+        for row in reader:
+            nazwiska.append(row[0])
+
+    with open('same_nazwiska_M.csv', mode='r', encoding='utf-8') as nazwiska_plik:
+        reader = csv.reader(nazwiska_plik)
+        for row in reader:
+            nazwiska.append(row[0])
+
+    with open('przykladowe_dane.csv', mode='w', newline='', encoding='utf-8') as plik:
         writer = csv.writer(plik)
-        writer.writerow(["Imię", "Nazwisko", "PESEL", "Data urodzenia", "Płeć"])
+        writer.writerow(["Imię", "Nazwisko", "PESEL"])
 
         for _ in range(n):
             plec = random.choice(["M", "K"])
@@ -52,5 +71,5 @@ def generuj_dane(n):
                 [imie, nazwisko, pesel])
 
 
-# Generowanie pliku CSV z 100 przykładowymi rekordami
+# tu numerek generuje plik z zadaną ilością wierszy
 generuj_dane(2302)
