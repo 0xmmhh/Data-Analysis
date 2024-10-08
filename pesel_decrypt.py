@@ -134,6 +134,7 @@ def zodiac_analysis1():
 
     plt.show()
 
+
 def name_analysis1(start_decade, end_decade):
     names_in_decade = []
 
@@ -162,28 +163,71 @@ def name_analysis1(start_decade, end_decade):
     else:
         print(f"Brak danych dla lat {start_decade}-{end_decade}")
 
-# def zodiac_analysis2():
-#
-#     year_to_analyze = 2004 # tutaj wpisujemy rok jako Int
-#
-#     for sign, (count) in zodiac_count_year:
-#         if :
-#             return sign
-#
-#
-#     labels = list(zodiac_count_year)
-#     sizes = list(zodiac_count_year)
-#     colors = plt.cm.Paired.colors
-#
-#     fig, ax = plt.subplots()
-#     ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
-#     ax.axis('equal')
-#
-#     ax.set_title(f'Rozkład znaków zodiaku w roku {year_to_analyze}')
-#
-#     plt.show()
+
+def zodiac_analysis2(year_to_analyze):
+    # Koz2 = 0
+    # Wod2 = 0
+    # Ryb2 = 0
+    # Bar2 = 0
+    # Byk2 = 0
+    # Bli2 = 0
+    # Rak2 = 0
+    # Lew2 = 0
+    # Pan2 = 0
+    # Wag2 = 0
+    # Sko2 = 0
+    # Stz2 = 0
+    #
+    # zodiac_yr_arr = []
+    #
+    # for i, pesel_number in enumerate(pesel):
+    #     pesel_data = pesel_decrypt(pesel_number)
+    #     year = pesel_data[2]
+    #     if year == year_to_analyze:
+    #         zodiac_yr_arr.append(zodiac_signs(pesel_data[0], pesel_data[1]))
+    #
+    # for zodiac in zodiac_yr_arr:
+    #
+    #     if zodiac == 'Koziorożec':
+    #         Koz2 += 1
+    #     elif zodiac == 'Wodnik':
+    #         Wod2 += 1
+    #     elif zodiac == 'Ryby':
+    #         Ryb2 += 1
+    #     elif zodiac == 'Baran':
+    #         Bar2 += 1
+    #     elif zodiac == 'Byk':
+    #         Byk2 += 1
+    #     elif zodiac == 'Bliźnięta':
+    #         Bli2 += 1
+    #     elif zodiac == 'Rak':
+    #         Rak2 += 1
+    #     elif zodiac == 'Lew':
+    #         Lew2 += 1
+    #     elif zodiac == 'Panna':
+    #         Pan2 += 1
+    #     elif zodiac == 'Waga':
+    #         Wag2 += 1
+    #     elif zodiac == 'Skorpion':
+    #         Sko2 += 1
+    #     elif zodiac == 'Strzelec':
+    #         Stz2 += 1
+    #
+
+    labels = list(zodiac_names)
+    sizes = list(zodiac_count)
+    colors = plt.cm.Paired.colors
+
+    fig, ax = plt.subplots()
+    ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
+    ax.axis('equal')
+
+    ax.set_title(f'Rozkład znaków zodiaku w pliku')
+
+    plt.show()
 
 
-# zodiac_analysis2()
+print(zodiac_analysis2(2004))
+zodiac_analysis2(2004)
 zodiac_analysis1()
-name_analysis1(1999, 2000)
+name_analysis1(1983, 2020)
