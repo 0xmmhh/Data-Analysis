@@ -72,4 +72,4 @@ def generuj_dane(n):
 
 
 # tu numerek generuje plik z zadaną ilością wierszy
-generuj_dane(2302)
+generuj_dane(10069)

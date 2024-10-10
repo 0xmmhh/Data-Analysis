@@ -2,6 +2,7 @@ import csv
 import matplotlib as plt
 import matplotlib.pyplot as plt
 from collections import Counter
+import numpy as np
 
 with open('przykladowe_dane.csv', mode='r', encoding='utf-8') as pesel_file:
     reader = csv.reader(pesel_file)
@@ -85,6 +86,7 @@ for i in range(2302):
     pesel_data = pesel_decrypt(pesel[i])
     birth_date = [pesel_data[2] - pesel_data[1] - pesel_data[0]]
     zodiac = zodiac_signs(pesel_data[0], pesel_data[1])
+
     if zodiac == 'Koziorożec':
         Koz += 1
     elif zodiac == 'Wodnik':
@@ -110,13 +112,6 @@ for i in range(2302):
     elif zodiac == 'Strzelec':
         Stz += 1
 
-# for i in range(200):
-#     pesel_data = pesel_decrypt(pesel[i])
-#     birth_date = f'{pesel_data[2]}-{pesel_data[1]}-{pesel_data[0]}'
-#     zodiac = zodiac_signs(pesel_data[0], pesel_data[1])
-
-# print(f"PESEL: {pesel[i]}, Data urodzenia: {birth_date}, Płeć: {pesel_data[3]}, Znak zodiaku: {zodiac}")
-# print(pesel_decrypt(pesel[0]))
 zodiac_names = ['Koziorożec', 'Wodnik', 'Ryby', 'Baran', 'Byk', 'Bliźnięta', 'Rak', 'Lew', 'Panna', 'Waga', 'Skorpion',
                 'Strzelec']
 zodiac_count = [Koz, Wod, Ryb, Bar, Byk, Bli, Rak, Lew, Pan, Wag, Sko, Stz]
@@ -165,54 +160,53 @@ def name_analysis1(start_decade, end_decade):
 
 
 def zodiac_analysis2(year_to_analyze):
-    # Koz2 = 0
-    # Wod2 = 0
-    # Ryb2 = 0
-    # Bar2 = 0
-    # Byk2 = 0
-    # Bli2 = 0
-    # Rak2 = 0
-    # Lew2 = 0
-    # Pan2 = 0
-    # Wag2 = 0
-    # Sko2 = 0
-    # Stz2 = 0
-    #
-    # zodiac_yr_arr = []
-    #
-    # for i, pesel_number in enumerate(pesel):
-    #     pesel_data = pesel_decrypt(pesel_number)
-    #     year = pesel_data[2]
-    #     if year == year_to_analyze:
-    #         zodiac_yr_arr.append(zodiac_signs(pesel_data[0], pesel_data[1]))
-    #
-    # for zodiac in zodiac_yr_arr:
-    #
-    #     if zodiac == 'Koziorożec':
-    #         Koz2 += 1
-    #     elif zodiac == 'Wodnik':
-    #         Wod2 += 1
-    #     elif zodiac == 'Ryby':
-    #         Ryb2 += 1
-    #     elif zodiac == 'Baran':
-    #         Bar2 += 1
-    #     elif zodiac == 'Byk':
-    #         Byk2 += 1
-    #     elif zodiac == 'Bliźnięta':
-    #         Bli2 += 1
-    #     elif zodiac == 'Rak':
-    #         Rak2 += 1
-    #     elif zodiac == 'Lew':
-    #         Lew2 += 1
-    #     elif zodiac == 'Panna':
-    #         Pan2 += 1
-    #     elif zodiac == 'Waga':
-    #         Wag2 += 1
-    #     elif zodiac == 'Skorpion':
-    #         Sko2 += 1
-    #     elif zodiac == 'Strzelec':
-    #         Stz2 += 1
-    #
+    Koz2 = 0
+    Wod2 = 0
+    Ryb2 = 0
+    Bar2 = 0
+    Byk2 = 0
+    Bli2 = 0
+    Rak2 = 0
+    Lew2 = 0
+    Pan2 = 0
+    Wag2 = 0
+    Sko2 = 0
+    Stz2 = 0
+
+    zodiac_yr_arr = []
+
+    for i, pesel_number in enumerate(pesel):
+        pesel_data = pesel_decrypt(pesel_number)
+        year = pesel_data[2]
+        if year == year_to_analyze:
+            zodiac_yr_arr.append(zodiac_signs(pesel_data[0], pesel_data[1]))
+
+    for zodiac in zodiac_yr_arr:
+
+        if zodiac == 'Koziorożec':
+            Koz2 += 1
+        elif zodiac == 'Wodnik':
+            Wod2 += 1
+        elif zodiac == 'Ryby':
+            Ryb2 += 1
+        elif zodiac == 'Baran':
+            Bar2 += 1
+        elif zodiac == 'Byk':
+            Byk2 += 1
+        elif zodiac == 'Bliźnięta':
+            Bli2 += 1
+        elif zodiac == 'Rak':
+            Rak2 += 1
+        elif zodiac == 'Lew':
+            Lew2 += 1
+        elif zodiac == 'Panna':
+            Pan2 += 1
+        elif zodiac == 'Waga':
+            Wag2 += 1
+        elif zodiac == 'Skorpion':
+            Sko2 += 1
+        elif zodiac == 'Strzelec':
+            Stz2 += 1
 
     labels = list(zodiac_names)
     sizes = list(zodiac_count)
@@ -227,7 +221,82 @@ def zodiac_analysis2(year_to_analyze):
     plt.show()
 
 
-print(zodiac_analysis2(2004))
+def name_analysis2(target_name):
+    decades = list(range(1950, 2020, 10))
+    decade_labels = [f"{decade}s" for decade in decades]
+    decade_counts = {decade: 0 for decade in decades}
+
+    for i, pesel_number in enumerate(pesel):
+        pesel_data = pesel_decrypt(pesel_number)
+        year = pesel_data[2]
+
+        if 1950 <= year <= 2019:
+            decade = (year // 10) * 10
+            if decade in decade_counts:
+                if names[i].strip().lower() == target_name.strip().lower():
+                    decade_counts[decade] += 1
+
+    counts = [decade_counts[decade] for decade in decades]
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.plot(decade_labels, counts, marker='o', linestyle='-', color='tab:blue')
+
+    ax.set_xlabel('Dekada')
+    ax.set_ylabel('Liczba osób')
+    ax.set_title(f'Popularność imienia "{target_name}" na przestrzeni dekad (1950-2019)')
+
+    plt.xticks(rotation=45)
+    plt.grid(True, linestyle='--', alpha=0.7)
+    plt.tight_layout()
+
+    plt.show()
+
+
+def zodiac_heatmap():
+
+    decades = list(range(1950, 2019, 10))
+    decade_labels = [f"{decade}s" for decade in decades]
+
+    heatmap_data = {sign: {decade: 0 for decade in decades} for sign in zodiac_names}
+
+    for i, pesel_number in enumerate(pesel):
+        pesel_data = pesel_decrypt(pesel_number)
+        if pesel_data is None:
+            continue
+        year = pesel_data[2]
+        zodiac = zodiac_signs(pesel_data[0], pesel_data[1])
+
+        if zodiac in zodiac_names and 1950 <= year <= 2020:
+            decade = (year // 10) * 10
+            if decade in decades:
+                heatmap_data[zodiac][decade] += 1
+
+    heatmap_matrix = []
+    for sign in zodiac_names:
+        row = [heatmap_data[sign][decade] for decade in decades]
+        heatmap_matrix.append(row)
+    heatmap_matrix = np.array(heatmap_matrix)
+
+    fig, ax = plt.subplots(figsize=(12, 8))
+
+    cax = ax.imshow(heatmap_matrix, aspect='auto', cmap='inferno', interpolation='bilinear')
+
+    ax.set_xticks(np.arange(len(decades)))
+    ax.set_xticklabels(decade_labels, rotation=45)
+    ax.set_yticks(np.arange(len(zodiac_names)))
+    ax.set_yticklabels(zodiac_names)
+
+    cbar = fig.colorbar(cax)
+    cbar.set_label('Liczba osób')
+
+    ax.set_title('Heatmapa rozkładu znaków zodiaku na przestrzeni dekad (1950-2019)')
+
+    plt.tight_layout()
+    plt.show()
+
+
 zodiac_analysis2(2004)
 zodiac_analysis1()
 name_analysis1(1983, 2020)
+name_analysis2('Maciej')
+zodiac_heatmap()
