@@ -177,9 +177,12 @@ def zodiac_analysis2(year_to_analyze):
 
     for i, pesel_number in enumerate(pesel):
         pesel_data = pesel_decrypt(pesel_number)
+        if pesel_data is None:
+            continue
         year = pesel_data[2]
         if year == year_to_analyze:
-            zodiac_yr_arr.append(zodiac_signs(pesel_data[0], pesel_data[1]))
+            zodiac = zodiac_signs(pesel_data[0], pesel_data[1])
+            zodiac_yr_arr.append(zodiac)
 
     for zodiac in zodiac_yr_arr:
 
@@ -208,16 +211,22 @@ def zodiac_analysis2(year_to_analyze):
         elif zodiac == 'Strzelec':
             Stz2 += 1
 
-    labels = list(zodiac_names)
-    sizes = list(zodiac_count)
+    sizes = [Koz2, Wod2, Ryb2, Bar2, Byk2, Bli2, Rak2, Lew2, Pan2, Wag2, Sko2, Stz2]
+
+    if sum(sizes) == 0:
+        print(f"Brak danych dla roku {year_to_analyze}.")
+        return
+
+    labels = zodiac_names
     colors = plt.cm.Paired.colors
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(8, 8))
     ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
     ax.axis('equal')
 
-    ax.set_title(f'Rozkład znaków zodiaku w pliku')
+    ax.set_title(f'Rozkład znaków zodiaku w roku {year_to_analyze}')
 
+    plt.tight_layout()
     plt.show()
 
 
@@ -253,7 +262,6 @@ def name_analysis2(target_name):
 
 
 def zodiac_heatmap():
-
     decades = list(range(1950, 2019, 10))
     decade_labels = [f"{decade}s" for decade in decades]
 
@@ -277,7 +285,7 @@ def zodiac_heatmap():
         heatmap_matrix.append(row)
     heatmap_matrix = np.array(heatmap_matrix)
 
-    fig, ax = plt.subplots(figsize=(12, 8))
+    fig, ax = plt.subplots(figsize=(8, 6))
 
     cax = ax.imshow(heatmap_matrix, aspect='auto', cmap='inferno', interpolation='bilinear')
 
@@ -295,8 +303,8 @@ def zodiac_heatmap():
     plt.show()
 
 
-zodiac_analysis2(2004)
+zodiac_analysis2(1900)
 zodiac_analysis1()
 name_analysis1(1983, 2020)
-name_analysis2('Maciej')
+name_analysis2('Piotr')
 zodiac_heatmap()
