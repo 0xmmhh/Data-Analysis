@@ -1,14 +1,16 @@
 import PySimpleGUI as sg
+from pesel_decrypt import zodiac_heatmap, name_analysis1, name_analysis2, zodiac_analysis1, zodiac_analysis2
 
 tab1_layout = [
     [sg.Text('Wpisz imię, żeby zobaczyć jak występowało w różnych dekadach')],
-    [sg.Text('Imię:'), sg.InputText(size=(15, 1))],
+    [sg.Text('Imię:'), sg.InputText(size=(15, 1), key='-NAME-')],
     [sg.Button('Stwórz wykres', size=(10, 1), key="tab1"), sg.Button('Anuluj', size=(10, 1))]
 ]
 
 tab2_layout = [
-    [sg.Text('Wpisz przedziały lat, dla których zobaczysz jakie imie było najpopularniejsze')],
-    [sg.Text('Początkowy przedział:'), sg.InputText(size=(8, 1)), sg.Text('Końcowy przedział:'), sg.InputText(size=(8, 1))],
+    [sg.Text('Wpisz przedziały lat, dla których zobaczysz jakie imię było najpopularniejsze')],
+    [sg.Text('Początkowy przedział:'), sg.InputText(size=(8, 1), key='-START_YEAR-'), 
+     sg.Text('Końcowy przedział:'), sg.InputText(size=(8, 1), key='-END_YEAR-')],
     [sg.Button('Stwórz wykres', size=(10, 1), key="tab2"), sg.Button('Anuluj', size=(10, 1))]
 ]
 
@@ -19,7 +21,7 @@ tab3_layout = [
 
 tab4_layout = [
     [sg.Text('Wpisz rok, żeby zobaczyć jak rozkładają się znaki zodiaku w danym roku')],
-    [sg.Text('Rok:'), sg.InputText(size=(10, 1))],
+    [sg.Text('Rok:'), sg.InputText(size=(10, 1), key='-YEAR-')],
     [sg.Button('Stwórz wykres', size=(10, 1), key="tab4"), sg.Button('Anuluj', size=(10, 1))]
 ]
 
@@ -42,6 +44,19 @@ while True:
     event, values = window.read()
     if event == sg.WIN_CLOSED or event == "Anuluj":
         break
-    print("You entered ", values)
+    elif event == "tab1":
+        name = values['-NAME-']
+        name_analysis2(name)
+    elif event == "tab2":
+        start_year = int(values['-START_YEAR-'])
+        end_year = int(values['-END_YEAR-'])
+        name_analysis1(start_year, end_year)
+    elif event == "tab3":
+        zodiac_analysis1()
+    elif event == "tab4":
+        year = values['-YEAR-']
+        zodiac_analysis2(year)
+    elif event == "tab5":
+        zodiac_heatmap()
 
 window.close()
