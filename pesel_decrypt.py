@@ -303,7 +303,7 @@ def zodiac_heatmap():
     plt.show()
 
 
-#zodiac_analysis2(1900)
+#zodiac_analysis2(2000)
 #zodiac_analysis1()
 #name_analysis1(1983, 2020)
 #name_analysis2('Piotr')

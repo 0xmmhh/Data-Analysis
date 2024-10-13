@@ -54,7 +54,7 @@ while True:
     elif event == "tab3":
         zodiac_analysis1()
     elif event == "tab4":
-        year = values['-YEAR-']
+        year = int(values['-YEAR-'])
         zodiac_analysis2(year)
     elif event == "tab5":
         zodiac_heatmap()
