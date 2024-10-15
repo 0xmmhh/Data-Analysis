@@ -302,7 +302,6 @@ def zodiac_heatmap():
     plt.tight_layout()
     plt.show()
 
-
 #zodiac_analysis2(2000)
 #zodiac_analysis1()
 #name_analysis1(1983, 2020)
